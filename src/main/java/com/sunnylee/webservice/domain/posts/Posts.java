@@ -1,5 +1,6 @@
 package com.sunnylee.webservice.domain.posts;
 
+import com.sunnylee.webservice.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor // lombok @, 기본 생성자 자동 추가
 @Entity // JPA @ // 절대 Setter 메소드를 만들지 않음
-public class Posts { // 실제 DB 테이블과 매칭
+public class Posts extends BaseTimeEntity { // 실제 DB 테이블과 매칭
 
     @Id // pk field
     @GeneratedValue(strategy = GenerationType.IDENTITY) // pk 생성규칙, auto_increment
@@ -35,6 +36,11 @@ public class Posts { // 실제 DB 테이블과 매칭
         this.title = title;
         this.content = content;
         this.author = author;
+    }
+
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
     }
 
 }
