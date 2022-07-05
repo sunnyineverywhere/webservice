@@ -49,6 +49,7 @@ public class PostsService {
     // *
     @Transactional(readOnly = true) // 트랜잭션 범위 유지 + 조회 기능만 남겨두어 속도 개선
     public List<PostListResponseDto> findAllDesc(){
+
         List<Posts> postsList = postsRepository.findAll();
         List<PostListResponseDto> postListResponseDtoList = new ArrayList<>();
         for(Posts posts : postsList){
@@ -56,6 +57,13 @@ public class PostsService {
             postListResponseDtoList.add(dto);
         }
         return postListResponseDtoList;
+
+    }
+
+    @Transactional
+    public void delete(Long id){
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no post id = " + id));
+        postsRepository.delete(posts);
     }
 
 
