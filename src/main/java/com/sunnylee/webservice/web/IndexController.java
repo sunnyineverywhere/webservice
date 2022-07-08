@@ -1,5 +1,6 @@
 package com.sunnylee.webservice.web;
 
+import com.sunnylee.webservice.config.auth.LoginUser;
 import com.sunnylee.webservice.config.auth.dto.SessionUser;
 import com.sunnylee.webservice.service.posts.PostsService;
 import com.sunnylee.webservice.web.dto.PostsResponseDto;
@@ -19,11 +20,8 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){ // 어느 컨트롤러든지 @LoginUser만 사용하면 세션 정보를 가져올 수 있음
         model.addAttribute("posts", postsService.findAllDesc());
-
-        // 유저 id 넘겨주는 부분
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         if(user != null){
             model.addAttribute("userName", user.getName());
